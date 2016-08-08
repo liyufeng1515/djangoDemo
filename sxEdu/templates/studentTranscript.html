@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>三夏教育</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+<link rel="stylesheet" href="/static/css/weui.min.css">
+<link rel="stylesheet" href="/static/css/jquery-weui.css">
+<link rel="stylesheet" href="/static/css/demos.css">
+
+  </head>
+
+  <body ontouchstart>
+    <div class="weui_panel weui_panel_access">
+              <div class="weui_panel_hd">我的成绩</div>
+              <div class="weui_panel_hd">{% if message %}{{ message }}{% endif %}</div>
+                    <div class="weui_panel_bd">     
+                        <table style="text-align:center;"> 
+                        {% for i in transcriptList %}
+                        <tr>
+                            {% for j in i %}
+                                <td style="width:100px">{{ j }}</td>
+                            {% endfor %}
+                        </tr> 
+                        {% endfor %}
+                        </table>
+                    </div>
+                                                                                                                                                                 </div>
+
+
+    <div class="weui_tabbar">
+        <a href="{% url 'login' %}" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="/static//images/icon_nav_button.png" alt="">
+                    </div>
+            <p class="weui_tabbar_label">首页</p>
+        </a>
+        <a href="{% url 'getStudentTranscript' %}" class="weui_tabbar_item">
+            <div class="weui_tabbar_icon">
+                <img src="/static//images/icon_nav_search_bar.png" alt="">
+                    </div>
+            <p class="weui_tabbar_label">成绩查询</p>
+        </a>
+        
+        <a href="" class="weui_tabbar_item">
+            <div class="weui_tabbar_icon">
+                <img src="/static/images/icon_nav_dialog.png" alt="">
+                    </div>
+            <p class="weui_tabbar_label">艺考资讯</p>
+        </a>
+        
+        <a href="{% url 'myOpus' %}" class="weui_tabbar_item">
+            <div class="weui_tabbar_icon">
+                <img src="/static/images/icon_nav_article.png" alt="">
+                    </div>
+            <p class="weui_tabbar_label">我的作品</p>
+        </a>
+    </div>
+    <script src="/static/js/jquery-2.1.4.js"></script>
+<script src="/static//js/jquery-weui.js"></script>
+
+  </body>
+</html>

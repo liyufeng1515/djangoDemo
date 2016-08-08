@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>三夏教育</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+        <link rel="stylesheet" href="/static/css/weui.min.css">
+        <link rel="stylesheet" href="/static/css/jquery-weui.css">
+        <link rel="stylesheet" href="/static/css/demos.css">
+        <style>
+            .swiper-container {
+                width: 100%;
+            } 
+            .swiper-container img{
+                display:block;
+                width:100%;
+            }
+        </style>
+    </head>
+    <body ontouchstart>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="/static/images/swiper-1.jpg" /></div>
+                <div class="swiper-slide"><img src="/static/images/swiper-2.jpg" /></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <form action="/sxEdu/login/" method="post">
+            {% csrf_token %}
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="tel" placeholder="请输姓名" name="studentName">
+            </div>    
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">学号</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="tel" placeholder="请输入学号" name="studentId">
+            </div>
+        </div>
+        <div class='demos-content-padded'>
+            <input type="submit" value="登陆" class="weui_btn weui_btn_primary">
+            <!--<a href="shouye.html" class="weui_btn weui_btn_primary">登陆</a>-->
+        </div>
+        </form>
+        <script src="/static/js/jquery-2.1.4.js"></script>
+        <script src="/static/js/swiper.js"></script>
+        <script>
+           $(".swiper-container").swiper({
+                    loop: true,
+                            autoplay: 3000
+                            });
+        </script>
+
+    </body>
+</html>
