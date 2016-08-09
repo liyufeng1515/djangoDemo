@@ -27,6 +27,9 @@
             </div>
             <div class="swiper-pagination"></div>
         </div>
+        {% if message %}
+        <div class="swiper-container" style="color:red">&nbsp;&nbsp;&nbsp;{{ message }}</div>
+        {% endif %}
         <form action="/sxEdu/login/" method="post">
             {% csrf_token %}
         <div class="weui_cell">

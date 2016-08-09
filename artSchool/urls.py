@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import * 
 from django.conf import settings
 from django.contrib import admin
+from sxEdu import views
 
 urlpatterns = [
+    url(r'^$', views.index),
     url(r'^admin/', admin.site.urls),
     #url(r'^media/(?P<path>.*)','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
     url(r'^sxEdu/',include('sxEdu.urls')),

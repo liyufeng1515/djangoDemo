@@ -10,7 +10,7 @@ import xlrd
 import os
 
 def index(request):
-	return render(request,'index.html',{})
+	return render(request,'main.html',{})
 
 def login(request):
     studentId = request.POST.get('studentId') if request.POST.get('studentId') else request.COOKIES.get('studentId') 
@@ -28,10 +28,15 @@ def login(request):
         return HttpResponse('Not found which student name is %s and student id is %s' %(studentName,studentId))
 
 def uploadOpus(request):
-    studentId = request.COOKIES.get('studentId')                                                                                                     
-    if not studentId:                                                                                                                                
-        return HttpResponse('Not found student that loginned.log back in.')
-    return render(request,'uploadOpus.html',{})
+    studentId = request.COOKIES.get('studentId')
+    page = None
+    message = None
+    if studentId:
+        page = 'uploadOpus.html'
+    else:
+        page = 'index.html'
+        message = 'Not found student that loginned.Please log back in.'
+    return render(request,page,{'message':message})
 
 class ImageForm(forms.Form):
     studentId = forms.CharField(required=False)
@@ -40,24 +45,33 @@ class ImageForm(forms.Form):
 
 def doUpload(request):
     studentId = request.COOKIES.get('studentId') 
-    if not studentId:
-        return HttpResponse('Not found student that loginned.log back in.')
-    if request.method == "POST":
-        form = ImageForm(request.POST,request.FILES)
-        if form.is_valid():
-            opus = Opus(studentId=studentId,imageTitle=form.cleaned_data['imageTitle'],opusImage=form.cleaned_data['opusImage'])
-            opus.save()
-            return render(request,'uploadSuccess.html',{'message':'image upload success.'})
+    page = None
+    message = None
+    if studentId:
+        page = 'uploadSuccess.html'
+        message = 'image upload success.'
+        if request.method == "POST":
+            form = ImageForm(request.POST,request.FILES)
+            if form.is_valid():
+                opus = Opus(studentId=studentId,imageTitle=form.cleaned_data['imageTitle'],opusImage=form.cleaned_data['opusImage'])
+                opus.save()
     else:
-        return HttpResponseForbidden('allowed only via post.')
+        page = 'index.html'
+        message = 'Not found student that loginned.Please log back in.'
+    return render(request,page,{'message':message})
     
 def myOpus(request):
     studentId = request.COOKIES.get('studentId')                                
-    if not studentId:           
-        return HttpResponse('Not found student that loginned.log back in.')
-    
-    opusList = Opus.objects.filter(studentId=studentId)  
-    return render(request,'myOpus.html',{'opusList':opusList})
+    page = None
+    message = None
+    opusList = []
+    if studentId:
+        page = 'myOpus.html'
+        opusList = Opus.objects.filter(studentId=studentId)  
+    else:
+        page = 'index.html'
+        message = 'Not found student that loginned.Please log back in.'
+    return render(request,page,{'message':message,'opusList':opusList})
 
 def othersOpus(request):
     if request.GET.get('studentId'):
@@ -67,27 +81,31 @@ def othersOpus(request):
 
 def getStudentTranscript(request):
     studentId = request.COOKIES.get('studentId')
-    if not studentId:
-        return HttpResponse('Not found student that loginned.log back in.')
-    studentIdIndex = None
-    studentIdTitle = "学号".decode('utf-8')
+    page = None
     message = None
     transcriptList = []
-    workBook = xlrd.open_workbook(os.path.join(os.path.dirname(__file__),'studentTranscript.xls'),'utf-8')
-    sheet = workBook.sheets()[0]
-    titleRow = sheet.row_values(0)
-    transcriptList.append(titleRow)
-    if studentIdTitle in titleRow:
-        studentIdIndex = titleRow.index(studentIdTitle)
-        for i in range(sheet.nrows):
-            value = sheet.cell_value(i,studentIdIndex)
-            if sheet.cell_type(i,studentIdIndex)==2:
-                value = str(int(value))
-            if value == request.COOKIES.get('studentId'):
-                rowValues = sheet.row_values(i)
-                transcriptList.append(rowValues)    
+    if studentId:
+        page = 'studentTranscript.html'
+        studentIdIndex = None
+        studentIdTitle = "学号".decode('utf-8')
+        workBook = xlrd.open_workbook(os.path.join(os.path.dirname(__file__),'studentTranscript.xls'),'utf-8')
+        sheet = workBook.sheets()[0]
+        titleRow = sheet.row_values(0)
+        transcriptList.append(titleRow)
+        if studentIdTitle in titleRow:
+            studentIdIndex = titleRow.index(studentIdTitle)
+            for i in range(sheet.nrows):
+                value = sheet.cell_value(i,studentIdIndex)
+                if sheet.cell_type(i,studentIdIndex)==2:
+                    value = str(int(value))
+                if value == request.COOKIES.get('studentId'):
+                    rowValues = sheet.row_values(i)
+                    transcriptList.append(rowValues)    
+        else:
+            message = 'Not found '+studentIdTitle+' in first row.'
     else:
-        message = 'Not found '+studentIdTitle+' in first row.'
-    return render(request,'studentTranscript.html',{'message':message,'transcriptList':transcriptList})
+        page = 'index.html'
+        message = 'Not found student that loginned.Please log back in.'
+    return render(request,page,{'message':message,'transcriptList':transcriptList})
 
 
