@@ -1,36 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>三夏教育</title>
-    <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-">
-
-<link rel="stylesheet" href="/static/css/weui.min.css">
-<link rel="stylesheet" href="/static/css/jquery-weui.css">
-<link rel="stylesheet" href="/static/css/demos.css">
-
-<style type="text/css">
-.msKeimgBox ul { width: 1000px; }
-.mskeLayBg { background: #000; width: 100%; position: absolute; left: 0px; top: 0px; z-index: 10; opacity: 0.7; filter: alpha(opacity=70); display: none; _display:none!important }
-.mskelayBox { height: 468px; width: 974px; margin-top: -251px; margin-left: -494px; position: fixed; left: 50%; top: 50%; border: 7px solid #FFF; z-index: 20; background: #FFF; display: none; _display:none!important }
-.mskeImgBg { height: 57px; width: 100%; position: absolute; left: 0px; bottom: 0px; }
-.mskeClaose { position: absolute; top: -17px; right: -17px; cursor: pointer; }
-.mske_downIco { position: absolute; left: 0px; top: 0px; }
-.mske_imgDown { background: url(/static/images/mke_imgMbg.png) repeat; height: 57px; width: 818px; position: absolute; right: 0px; bottom: 0px; font: 13px/57px "微软雅黑"; color: #FFF; }
-.mske_imgDown a { margin-left: 34px; }
-.mskeTogBtn { background: url(/static/images/mke_moreImg.jpg) no-repeat; height: 93px; width: 185px; position: absolute; z-index: 1; right: 0px; cursor: pointer; bottom: 0px; }
-.mskeTogBtn2 { background: url(/static/images/mke_moreImg2.jpg) no-repeat; bottom: 10px; }
-.msKeimgBox2 { height: auto; }
-.mske_html img {height:460px;width: 970px;}
-</style>
-
-
-  </head>
-  <body ontouchstart>
+    {% include 'header.html' %}
+    <body ontouchstart>
       <!--图库弹出层 开始-->
       <div class="mskeLayBg"></div>
       <div class="mskelayBox">
@@ -45,53 +16,23 @@
           {% for opus in opusList %}
         <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
             <div class="weui_media_hd">
-              <img id="openImg" class="weui_media_appmsg_thumb" src="/static/{{opus.opusImage}}" alt=""/>
+              <img id="openImg" class="weui_media_appmsg_thumb" src="/static/{{opus.opusImage}}"/>
             </div>
             <div class="weui_media_bd">
               <h4 class="weui_media_title">{{opus.imageTitle}}</h4>
               <p class="weui_media_desc">{{opus.createDate}}</p>
           </div>
-      </a>
+        </a>
             {% endfor %}
       </div>
-    </div>
-    <div class="weui_tabbar">
-        <a href="{% url 'index' %}" class="weui_tabbar_item weui_bar_item_on">
-            <div class="weui_tabbar_icon">
-                <img src="/static/images/icon_nav_button.png" alt="">
-                    </div>
-            <p class="weui_tabbar_label">首页</p>
-        </a>
-        <a href="{% url 'getStudentTranscript' %}" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/static/images/icon_nav_search_bar.png" alt="">
-                    </div>
-            <p class="weui_tabbar_label">成绩查询</p>
-        </a>
-        
-        <a href="#" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/static/images/icon_nav_dialog.png" alt="">
-                    </div>
-            <p class="weui_tabbar_label">艺考资讯</p>
-        </a>
-        
-        <a href="{% url 'myOpus' %}" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/static/images/icon_nav_article.png" alt="">
-                    </div>
-            <p class="weui_tabbar_label">我的作品</p>
-        </a>
-    </div>
-        <script src="/static/js/jquery-2.1.4.js"></script>
-<script src="/static/js/jquery-weui.js"></script>
-<script>
-    //图库弹出层
-    $(".mskeLayBg").height($(document).height());
-    $(".mskeClaose").click(function(){$(".mskeLayBg,.mskelayBox").hide()});
-    $("#openImg").click(function(){$(".mske_html").html("<img src='"+this.src+"'>");$(".mskeLayBg").show();$(".mskelayBox").fadeIn(300)});
-    $(".mskeTogBtn").click(function(){$(".msKeimgBox").toggleClass("msKeimgBox2");$(this).toggleClass("mskeTogBtn2")});
-    
-</script>
-  </body>
+  </div>
+  <script>
+                  //图库弹出层
+              $(".mskeLayBg").height($(document).height());
+                      $(".mskeClaose").click(function(){$(".mskeLayBg,.mskelayBox").hide()});
+                              $(".weui_media_appmsg_thumb").click(function(){$(".mske_html").html("<img src='"+this.src+"'>");$(".mskeLayBg").show();$(".mskelayBox").fadeIn(300)});
+                                      $(".mskeTogBtn").click(function(){$(".msKeimgBox").toggleClass("msKeimgBox2");$(this).toggleClass("mskeTogBtn2")});                                $(".swiper-container").swiper({loop:true,autoplay:3000});       
+  </script>
+  {% include 'footer.html' %}
+    <body>
 </html>
