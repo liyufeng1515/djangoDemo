@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^myOpus/$',views.myOpus,name='myOpus'),
     url(r'^othersOpus/$',views.othersOpus,name='othersOpus'),
     url(r'^studentTranscript/$',views.getStudentTranscript,name='getStudentTranscript'),
+    url(r'^aboutSX/$',views.aboutSX,name='aboutSX'),
+    url(r'^information/$',views.information,name='information'),
 ]
 

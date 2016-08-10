@@ -79,6 +79,12 @@ def othersOpus(request):
         return render(request,'othersOpus.html',{'opusList':opusList,'studentId':request.GET.get('studentId')})
     return render(request,'othersOpus.html',{})
 
+def information(request):
+    return render(request,'information.html',{})
+
+def aboutSX(request):
+    return render(request,'aboutSX.html',{})
+
 def getStudentTranscript(request):
     studentId = request.COOKIES.get('studentId')
     page = None
